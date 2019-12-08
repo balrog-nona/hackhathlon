@@ -17,20 +17,9 @@ for channel in channels:
         url = url_first + date + url_last + channel
         seznam_url.append(url)
 
-# vyzva uzivateli k zadani filmu a emailu
-seznam_filmu = []
-while True:
-    film = input('Zadej nazev filmu (i s diakritikou): ')
-    if film == "":
-        break
-    seznam_filmu.append(film)
-
-zaslat_email = input('Prejes si zaslat email s vysledkem? a/n ')
-if zaslat_email == 'a':
-    email_uzivatele = input('Zadej svuj email: ')
 
 # vyhledani filmu v programu
-def vyhledej_film():
+def vyhledej_film(seznam_filmu):
     text = list()
     for soubor in os.listdir('soubory/'):
         tree = ET.parse("soubory/{}".format(soubor))
@@ -42,14 +31,15 @@ def vyhledej_film():
             for film in seznam_filmu:
                 if film.lower() in nazev.text.lower():
                     cas = porad.find('cas')
-                    radek = [datum, kanal, cas.text, nazev.text]
+                    radek = {'nazev': nazev.text, 'datum': datum, 'kanal': kanal, 'cas': cas.text}
                     text.append(radek)
     return text
 
 
 # notifikacni email s vysledkem
-text_emailu = ""
-vysledky = vyhledej_film()
+#text_emailu = ""
+#vysledky = vyhledej_film()
+"""
 for radek in vysledky:
     radek_string = "Dne {} na {} v {} dávají {}.\n".format(*radek)
     text_emailu = text_emailu + radek_string
@@ -71,3 +61,4 @@ if zaslat_email == 'a':
     smtpObj.login('hlidejfilmy@gmail.com', 'hlidacfilmu88')
     smtpObj.sendmail('hlidejfilmy@gmail.com', email_uzivatele, text)
     smtpObj.quit()
+"""
