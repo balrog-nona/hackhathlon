@@ -5,8 +5,8 @@
   }
   
   body {
-    background-color: #0e234d;
-    color: #ffffff;
+    background-color: #9CE3F0;
+    color: #1B0404;
   }
   
   p {
@@ -14,4 +14,7 @@
     color: #080808;
   }
 
-  
+  .banner{
+    background-image: url("/static/obrazek_filmy.jpg");
+    height: 200px;
+  }
