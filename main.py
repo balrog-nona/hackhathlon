@@ -36,29 +36,23 @@ def vyhledej_film(seznam_filmu):
     return text
 
 
-# notifikacni email s vysledkem
-#text_emailu = ""
-#vysledky = vyhledej_film()
-"""
-for radek in vysledky:
-    radek_string = "Dne {} na {} v {} dávají {}.\n".format(*radek)
-    text_emailu = text_emailu + radek_string
+def posli_email(email, text_emailu):
+    email_text = ""
+    for item in text_emailu:
+        radek = "{} davaji dne {} na {} v {}.\n".format(**item)
+        email_text = email_text + radek
 
-print(text_emailu)
-
-if zaslat_email == 'a':
-    sender = 'hlidejfilmy@gmail.com'
     msg = MIMEMultipart()
     msg['From'] = 'hlidejfilmy@gmail.com'
-    msg['To'] = email_uzivatele
+    msg['To'] = email
     msg['Subject'] = 'No response - seznam filmu'
-    body = text_emailu
+    body = email_text
     msg.attach(MIMEText(body, 'plain'))
     text = msg.as_string().encode('utf-8')
 
     smtpObj = smtplib.SMTP_SSL('smtp.gmail.com', 465)
     smtpObj.ehlo()
     smtpObj.login('hlidejfilmy@gmail.com', 'hlidacfilmu88')
-    smtpObj.sendmail('hlidejfilmy@gmail.com', email_uzivatele, text)
+    smtpObj.sendmail('hlidejfilmy@gmail.com', email, text)
     smtpObj.quit()
-"""
+
