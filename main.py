@@ -1,5 +1,6 @@
 import smtplib
 import requests
+import os
 import xml.etree.ElementTree as ET
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -29,13 +30,11 @@ if zaslat_email == 'a':
     email_uzivatele = input('Zadej svuj email: ')
 
 # vyhledani filmu v programu
-
 def vyhledej_film():
     text = list()
-    for url in seznam_url:
-        response = requests.get(url)
-        response.encoding = 'utf-8'
-        root = ET.fromstring(response.text)
+    for soubor in os.listdir('soubory/'):
+        tree = ET.parse("soubory/{}".format(soubor))
+        root = tree.getroot()
         datum = root.attrib.get('datum_vysilani')
         kanal = root.attrib.get('kanal')
         for porad in root:
