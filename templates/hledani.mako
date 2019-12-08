@@ -10,7 +10,7 @@
 <body>
 
 <p>
-To, co jsi hledaj, najdeš v TV následovně:
+To, co jsi hledal/a, najdeš v TV následovně:
 </p>
 <table>
 <tr>

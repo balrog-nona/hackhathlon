@@ -1,11 +1,11 @@
 from flask import Flask, request
-#import main
+import main
 from flask_mako import MakoTemplates, render_template
 
 app = Flask(__name__)
 mako = MakoTemplates(app)
 app.template_folder = "templates"
-
+'''
 vysledek = [
   {
     'nazev': 'Zpravy',
@@ -26,17 +26,20 @@ vysledek = [
     'cas': '19:40' 
   }
     ]
+'''
 
 @app.route('/')
 def hello():
-  return render_template('homepage.mako', name='Peta a Anet')
+  return render_template('homepage.mako',)
 
 
 @app.route('/hledani', methods=['POST'])
 def hledej():
-  result = request.form['seznam_filmu'].strip().split('\n')
+  result = request.form['seznam_filmu'].split('\n')
+  result = [film.strip() for film in result]
   print(result)
-  #vysledek = fceOdNony(result)
+  vysledek = main.vyhledej_film(result)
+  print(vysledek)
   return render_template('hledani.mako', vysledek=vysledek)
 
 @app.route('/posli', methods=['POST'])
