@@ -11,21 +11,17 @@
 <body>
 <div class="banner"></div>
 
-<p style="text-align: center">
-  <big><big><big>Vítejte na našem webu.</big></big></big>
-</p>
-<p style="text-align: center">
-  <big><big><big>Tady se můžete podívat, kdy dávají Váš oblíbený film. </big></big></big>
-</p>
 
-<form method='POST' id='najdi' action='/hledani' style="text-align: center">
-<table>
-<p style="text-align: center">
-  Stačí sem pouze napsat film, který hledáš (s diakritikou a malými písmenky:)
-</p>
 
-<textarea name="seznam_filmu"></textarea>
-<input value='hledej' type='submit' />
+<form class="form" method='POST' id='najdi' action='/hledani'>
+<p class="intro">
+  Zadejte filmy, které vás zajímají 
+</p>
+<textarea class="seacher" name="seznam_filmu" ></textarea>
+<p>
+  Název filmu napiš s diakritikou a malými písmenky:)
+</p>
+<input class="submit" value='hledej' type='submit'/>
 </form>
 
 </body>
