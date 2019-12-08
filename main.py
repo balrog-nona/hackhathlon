@@ -1,6 +1,8 @@
 import smtplib
 import requests
 import xml.etree.ElementTree as ET
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 response = requests.get('https://www.ceskatelevize.cz/services-old/programme/xml/schedule.php?user=test&date=08.12.2019&channel=ct24')
 response.encoding='utf-8'
@@ -17,12 +19,12 @@ while True:
         break
     seznam_filmu.append(film)
 
-text = list()
 # vyhledani jednotlivych filmu v programu
+text = list()
 for porad in root:
   nazev = porad.find('nazvy').find('nazev')
   for film in seznam_filmu:
-    if film in nazev.text:
+    if film.lower() in nazev.text.lower():
         cas=porad.find('cas')
         radek = (datum, kanal, cas.text, nazev.text)
         text.append(radek)
@@ -31,15 +33,24 @@ for porad in root:
 # notifikacni email s vysledkem
 zaslat_email = input('Prejes si zaslat email s vysledkem? a/n ')
 
+text_emailu = ""
 for radek in text:
-    text_emailu = 
-
-text_emailu = 'zprava'  # vytvori se po vyhodnoceni programu
+    radek_string = "Dne {} na {} v {} dávají {}.\n".format(*radek)
+    text_emailu = text_emailu + radek_string
 
 if zaslat_email == 'a':
     email_uzivatele = input('Zadej svuj email: ')
+    sender = 'hlidejfilmy@gmail.com'
+    msg = MIMEMultipart()
+    msg['From'] = 'hlidejfilmy@gmail.com'
+    msg['To'] = email_uzivatele
+    msg['Subject'] = 'No response - seznam filmu'
+    body = text_emailu
+    msg.attach(MIMEText(body, 'plain'))
+    text = msg.as_string().encode('utf-8')
+
     smtpObj = smtplib.SMTP_SSL('smtp.gmail.com', 465)
     smtpObj.ehlo()
     smtpObj.login('hlidejfilmy@gmail.com', 'hlidacfilmu88')
-    smtpObj.sendmail('hlidejfilmy@gmail.com', email_uzivatele, text_emailu)
+    smtpObj.sendmail('hlidejfilmy@gmail.com', email_uzivatele, text)
     smtpObj.quit()
