@@ -14,17 +14,14 @@
   Tady se můžete podívat, kdy dávají Váš oblíbený film.
 </p>
 
-<form method='POST' id='najdi' action='/hledani.mako'>
+<form method='POST' id='najdi' action='/hledani'>
 <table>
 <p>
   Stačí napsat sem film, který hledáš, s diakritikou a malými písmenky :)
 </p>
-<textarea name="seznam_filmu">Sem napis seznam filmu</textarea>
-<input value='HLEDEJ' type='submit' />
+<textarea name="seznam_filmu"></textarea>
+<input value='hledej' type='submit' />
 </form>
 
-<p>
-  Hello world from Czechitas Hackaton to ${name}!
-</p>
 </body>
 </html>
