@@ -39,7 +39,7 @@ def vyhledej_film(seznam_filmu):
 def posli_email(email, text_emailu):
     email_text = ""
     for item in text_emailu:
-        radek = "{} davaji dne {} na {} v {}.\n".format(**item)
+        radek = f"{item['nazev']} davaji dne {item['datum']} na {item['kanal']} v {item['cas']}.\n"
         email_text = email_text + radek
 
     msg = MIMEMultipart()

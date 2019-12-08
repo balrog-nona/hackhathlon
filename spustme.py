@@ -35,17 +35,21 @@ def hello():
 
 @app.route('/hledani', methods=['POST'])
 def hledej():
-  result = request.form['seznam_filmu'].split('\n')
-  result = [film.strip() for film in result]
-  print(result)
+  dotaz = request.form['seznam_filmu']
+  result = [film.strip() for film in dotaz.split('\n')]
   vysledek = main.vyhledej_film(result)
-  print(vysledek)
-  return render_template('hledani.mako', vysledek=vysledek)
+  return render_template('hledani.mako', vysledek=vysledek, dotaz=dotaz)
 
 @app.route('/posli', methods=['POST'])
-def poslano():
+def posli_mail():
   email = request.form['email'].strip()
+  dotaz = request.form['dotaz']
+  result = [film.strip() for film in dotaz.split('\n')]
+  vysledek = main.vyhledej_film(result)
+  print(vysledek)
+  main.posli_email(email, vysledek)
   print(email)
+
   #vysledek = fceOdNony(result)
   return render_template('posli.mako', email=email)
 

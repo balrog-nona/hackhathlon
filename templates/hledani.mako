@@ -34,6 +34,7 @@ To, co jsi hledal/a, najdeš v TV následovně:
 <p>
   Jestli chceš, můžeme Ti poslat výsledky našeho hledání na e-mail. Zadej ho případně sem.
 </p>
+<input type=hidden name='dotaz' value="${dotaz}">
 <input type="text" name="email">
 <input value='OK' type='submit' />
 </form>
