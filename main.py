@@ -29,25 +29,29 @@ if zaslat_email == 'a':
     email_uzivatele = input('Zadej svuj email: ')
 
 # vyhledani filmu v programu
-text = list()
-for url in seznam_url:
-    response = requests.get(url)
-    response.encoding = 'utf-8'
-    root = ET.fromstring(response.text)
-    datum = root.attrib.get('datum_vysilani')
-    kanal = root.attrib.get('kanal')
-    for porad in root:
-        nazev = porad.find('nazvy').find('nazev')
-        for film in seznam_filmu:
-            if film.lower() in nazev.text.lower():
-                cas = porad.find('cas')
-                radek = (datum, kanal, cas.text, nazev.text)
-                text.append(radek)
+
+def vyhledej_film():
+    text = list()
+    for url in seznam_url:
+        response = requests.get(url)
+        response.encoding = 'utf-8'
+        root = ET.fromstring(response.text)
+        datum = root.attrib.get('datum_vysilani')
+        kanal = root.attrib.get('kanal')
+        for porad in root:
+            nazev = porad.find('nazvy').find('nazev')
+            for film in seznam_filmu:
+                if film.lower() in nazev.text.lower():
+                    cas = porad.find('cas')
+                    radek = [datum, kanal, cas.text, nazev.text]
+                    text.append(radek)
+    return text
 
 
 # notifikacni email s vysledkem
 text_emailu = ""
-for radek in text:
+vysledky = vyhledej_film()
+for radek in vysledky:
     radek_string = "Dne {} na {} v {} dávají {}.\n".format(*radek)
     text_emailu = text_emailu + radek_string
 
