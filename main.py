@@ -4,7 +4,13 @@ response = requests.get('https://www.ceskatelevize.cz/services-old/programme/xml
 response.encoding='utf-8'
 root = ET.fromstring(response.text)
 
+datum = root.attrib.get('datum_vysilani')
+kanal = root.attrib.get('kanal')
+seznam_poradu = ['Regiony']
+
 for porad in root:
   nazev = porad.find('nazvy').find('nazev')
-  cas=porad.find('cas')
-  print(nazev.text, cas.text)
+  if 'Zprávy' in nazev.text:
+    cas=porad.find('cas')
+  #if nazev in seznam_poradu:
+    print(datum, kanal, cas.text, nazev.text)
